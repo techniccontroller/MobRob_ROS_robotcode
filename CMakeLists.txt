@@ -62,3 +62,7 @@ add_dependencies(${PROJECT_NAME}_state_publisher ${catkin_EXPORTED_TARGETS})
 add_executable(${PROJECT_NAME}_odom_converter src/odom_converter.cpp)
 target_link_libraries(${PROJECT_NAME}_odom_converter ${catkin_LIBRARIES})
 add_dependencies(${PROJECT_NAME}_odom_converter ${catkin_EXPORTED_TARGETS})
+
+add_executable(${PROJECT_NAME}_static_joint_state_publisher src/static_joint_state_publisher.cpp)
+target_link_libraries(${PROJECT_NAME}_static_joint_state_publisher ${catkin_LIBRARIES})
+add_dependencies(${PROJECT_NAME}_static_joint_state_publisher ${catkin_EXPORTED_TARGETS})
