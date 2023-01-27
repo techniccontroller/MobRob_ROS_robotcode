@@ -11,7 +11,7 @@ import rospy
 def send_to_attiny(req):
     global spi
     input = req.input
-    print 'Request-Input', input
+    print('Request-Input', input)
     if input[-1] != '\n':
         input += '\n'
     chars = []
@@ -22,7 +22,7 @@ def send_to_attiny(req):
     str = ''
     for i in res:
         str += chr(i)
-    print "attiny: ", str[1:]
+    print("attiny: ", str[1:])
     if "gp" in input:
         time.sleep(0.1)
         chars = [48,48,48,48,48,48,48]
@@ -30,7 +30,7 @@ def send_to_attiny(req):
         str = ''
         for i in res:
             str += chr(i)
-        print "attiny-res: ", str[1:]
+        print("attiny-res: ", str[1:])
     return AttinyCommandResponse(str[1:])
     
 
@@ -52,5 +52,5 @@ if __name__ == "__main__":
 
     rospy.init_node('attiny_server')
     s = rospy.Service('attiny_command', AttinyCommand, send_to_attiny)
-    print "Ready to send commands."
+    print("Ready to send commands.")
     rospy.spin()
