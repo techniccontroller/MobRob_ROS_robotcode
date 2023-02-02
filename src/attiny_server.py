@@ -3,34 +3,38 @@ import time
 import spidev
 import array
 from subprocess import call, PIPE
+import threading
 
 from myrobot_model.srv import AttinyCommand, AttinyCommandRequest, AttinyCommandResponse
 import rospy
 
+lock = threading.Lock()
+
 
 def send_to_attiny(req):
-    global spi
+    global spi, lock
     input = req.input
-    print('Request-Input', input)
-    if input[-1] != '\n':
-        input += '\n'
-    chars = []
-    for c in input:
+    with lock:
+        print('\nRequest-Input', input.rstrip())
+        if input[-1] != '\n':
+            input += '\n'
+        chars = []
+        for c in input:
             chars.append(ord(c))
-    res = spi.xfer2(chars)
-    time.sleep(0.1)
-    str = ''
-    for i in res:
-        str += chr(i)
-    print("attiny: ", str[1:])
-    if "gp" in input:
-        time.sleep(0.1)
-        chars = [48,48,48,48,48,48,48]
         res = spi.xfer2(chars)
+        time.sleep(0.02)
         str = ''
         for i in res:
             str += chr(i)
-        print("attiny-res: ", str[1:])
+        print("attiny: ", str[1:])
+        if "gp" in input:
+            time.sleep(0.02)
+            chars = [48,48,48,48,48,48,48]
+            res = spi.xfer2(chars)
+            str = ''
+            for i in res:
+                str += chr(i)
+            print("attiny-res: ", str[1:])
     return AttinyCommandResponse(str[1:])
     
 
