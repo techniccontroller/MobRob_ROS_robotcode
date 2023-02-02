@@ -10,7 +10,6 @@ project(mobrob_robotcode)
 find_package(catkin REQUIRED COMPONENTS
   joint_state_publisher
   robot_state_publisher
-  rviz
   xacro  
   roscpp
   rospy
