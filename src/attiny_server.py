@@ -27,7 +27,7 @@ def send_to_attiny(req):
         for i in res:
             str += chr(i)
         print("attiny: ", str[1:])
-        if "gp" in input:
+        if "gp" in input or "gg" in input:
             time.sleep(0.02)
             chars = [48,48,48,48,48,48,48]
             res = spi.xfer2(chars)
